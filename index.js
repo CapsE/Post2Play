@@ -90,8 +90,8 @@ app.post('/link', function (req, res) {
 });
 
 app.post('/event', function (req, res) {
-    if(req.body.challenge){
-        res.setHeader('Content-type', 'application/x-www-form-urlencoded');
+    if(req.body.type == "url_verification"){
+        res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(
             {"challenge":req.body.challenge}
         ));
