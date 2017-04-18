@@ -91,7 +91,10 @@ app.post('/link', function (req, res) {
 
 app.post('/event', function (req, res) {
     if(req.body.challange){
-        res.send(req.body.challange);
+        res.setHeader('Content-type', 'application/x-www-form-urlencoded');
+        res.send(JSON.stringify(
+            {"challenge":req.body.challange}
+        ));
     }
 });
 
