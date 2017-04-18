@@ -4,6 +4,8 @@
 
 var express = require('express');
 var bodyParser = require('body-parser');
+var DB = require('baqend');
+DB.connect('post2play');
 
 var app = express();
 
@@ -15,19 +17,38 @@ app.get('/', function (req, res) {
 });
 
 app.post('/action', function(req, res){
-    console.log(req.body);
     var name = req.body.user_name;
     var text = req.body.text;
 
     var i = parseInt(Math.random() * 100 +1);
-    var message = "";
 
     var data = {
-        "text": name + "tries to " + text + "and rolls " + i,
+        "text": name + " tries to " + text + " and rolls " + i,
         "response_type": "in_channel",
     };
     res.setHeader('Content-Type', 'application/json');
    res.send(JSON.stringify(data));
+});
+
+app.post('/link', function (req, res) {
+    var name = req.body.user_name;
+    var text = req.body.text;
+
+    DB.Character.find(text).singleResult().then(function (char) {
+        var data = {
+            "text": "You are now linked to " + char.name
+        };
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(data));
+    }).catch(function (e) {
+        var data = {
+            "text": e.message
+        };
+        res.setHeader('Content-Type', 'application/json');
+        res.send(JSON.stringify(data));
+    });
+
+
 });
 
 app.listen(process.env.PORT || 3000, function () {
