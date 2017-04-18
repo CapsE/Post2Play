@@ -89,6 +89,12 @@ app.post('/link', function (req, res) {
     });
 });
 
+app.post('/event', function (req, res) {
+    if(req.body.challange){
+        res.send(req.body.challange);
+    }
+});
+
 app.listen(process.env.PORT || 3000, function () {
     console.log('Example app listening on port 3000!');
 });
