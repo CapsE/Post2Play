@@ -34,7 +34,7 @@ app.post('/link', function (req, res) {
     var name = req.body.user_name;
     var text = req.body.text;
 
-    DB.Character.find(text).singleResult().then(function (char) {
+    DB.Character.load(text).then(function (char) {
         var data = {
             "text": "You are now linked to " + char.name
         };
