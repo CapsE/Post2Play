@@ -28,6 +28,7 @@ app.get('/', function (req, res) {
 });
 
 app.post('/action', function(req, res){
+    console.log(req.body);
     var id = req.body.user_id;
     var name = req.body.user_name;
     var text = req.body.text;
@@ -47,17 +48,18 @@ app.post('/action', function(req, res){
 
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(data));
-    }).catch(function () {
+    }).catch(function (e) {
         var data = {
             "text": "Please use /link <id> to link your character",
+            "attachments": [
+                {
+                    "text": e.message
+                }
+            ]
         };
         res.setHeader('Content-Type', 'application/json');
         res.send(JSON.stringify(data));
     });
-
-
-    res.setHeader('Content-Type', 'application/json');
-   res.send(JSON.stringify(data));
 });
 
 app.post('/link', function (req, res) {
