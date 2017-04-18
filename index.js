@@ -14,17 +14,17 @@ app.get('/', function (req, res) {
     res.send('Hello World!');
 });
 
-app.post('/seal', function(req, res){
+app.post('/action', function(req, res){
     console.log(req.body);
+    var name = req.body.user_name;
+    var text = req.body.text;
+
+    var i = parseInt(Math.random() * 100 +1);
+    var message = "";
+
     var data = {
-        "text": "Seal of approval",
+        "text": name + "tries to " + text + "and rolls " + i,
         "response_type": "in_channel",
-        "attachments": [
-            {
-                "text":"Du hast gerade das \"Seal of Approval\" bekommen. Gute Arbeit!",
-                "thumb_url":"https://sealofapproval.herokuapp.com/seal.jpg"
-            }
-        ]
     };
     res.setHeader('Content-Type', 'application/json');
    res.send(JSON.stringify(data));
